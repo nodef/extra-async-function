@@ -1,6 +1,6 @@
 {
   "name": "extra-asyncfunction",
-  "version": "0.0.10",
+  "version": "0.0.11",
   "description": "An async function is a function that delivers its result asynchronously.",
   "main": "index.js",
   "module": "index.mjs",
