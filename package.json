@@ -1,0 +1,24 @@
+{
+  "name": "extra-asyncfunction",
+  "version": "0.0.1",
+  "description": "An async function is a function that delivers its result asynchronously.",
+  "main": "index.js",
+  "scripts": {
+    "test": "exit"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nodef/extra-asyncfunction.git"
+  },
+  "keywords": [
+    "extra",
+    "async",
+    "function"
+  ],
+  "author": "wolfram77@gmail.com",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/nodef/extra-asyncfunction/issues"
+  },
+  "homepage": "https://github.com/nodef/extra-asyncfunction#readme"
+}
