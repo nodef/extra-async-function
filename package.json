@@ -1,6 +1,6 @@
 {
   "name": "extra-asyncfunction",
-  "version": "0.0.13",
+  "version": "0.0.14",
   "description": "An async function is a function that delivers its result asynchronously.",
   "main": "index.js",
   "module": "index.mjs",
@@ -33,6 +33,6 @@
   "homepage": "https://github.com/nodef/extra-asyncfunction#readme",
   "devDependencies": {
     "extra-build": "^1.1.27",
-    "extra-function": "0.0.48"
+    "extra-function": "0.0.50"
   }
 }
