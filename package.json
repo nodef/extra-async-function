@@ -1,6 +1,6 @@
 {
   "name": "extra-asyncfunction",
-  "version": "0.0.14",
+  "version": "0.0.15",
   "description": "An async function is a function that delivers its result asynchronously.",
   "main": "index.js",
   "module": "index.mjs",
@@ -23,7 +23,16 @@
   "keywords": [
     "extra",
     "async",
-    "function"
+    "function",
+    "arity",
+    "backoff",
+    "ID",
+    "is",
+    "memoize",
+    "name",
+    "parameters",
+    "signature",
+    "WAIT"
   ],
   "author": "wolfram77@gmail.com",
   "license": "MIT",
@@ -32,7 +41,7 @@
   },
   "homepage": "https://github.com/nodef/extra-asyncfunction#readme",
   "devDependencies": {
-    "extra-build": "^1.1.27",
+    "extra-build": "^1.1.28",
     "extra-function": "0.0.50"
   }
 }
