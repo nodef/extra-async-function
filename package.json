@@ -1,6 +1,6 @@
 {
   "name": "extra-async-function",
-  "version": "0.1.1",
+  "version": "1.0.0",
   "description": "A collection of ways for transforming async functions.",
   "main": "index.js",
   "module": "index.mjs",
@@ -33,7 +33,7 @@
     "@rollup/plugin-commonjs": "^22.0.1",
     "@rollup/plugin-node-resolve": "^13.3.0",
     "extra-build": "^2.1.31",
-    "extra-function": "^1.0.2",
+    "extra-function": "^1.0.5",
     "rollup-plugin-cleanup": "^3.2.1",
     "rollup-plugin-dts": "^4.2.2"
   }
