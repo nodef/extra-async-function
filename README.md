@@ -46,6 +46,8 @@ exposed as `extra_async_function` standalone variable and can be loaded from
 
 [async function]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function
 [result asynchronously]: https://exploringjs.com/impatient-js/ch_async-functions.html#async-constructs
+[Promise]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise
+[extra-function]: https://www.npmjs.com/package/extra-function
 [pipe-forward operator]: https://stackoverflow.com/questions/1457140/haskell-composition-vs-fs-pipe-forward-operator
 [function chaining]: https://www.npmjs.com/package/chain-function
 [Haskell]: https://www.haskell.org
@@ -147,7 +149,8 @@ example1();
 <br>
 
 
-[![](https://img.youtube.com/vi/vzfy4EKwG_Y/maxresdefault.jpg)](https://www.youtube.com/watch?v=vzfy4EKwG_Y)<br>
+[![](https://img.youtube.com/vi/pIQwho5EU8w/maxresdefault.jpg)](https://www.youtube.com/watch?v=pIQwho5EU8w)<br>
+[![DOI](https://zenodo.org/badge/277720718.svg)](https://zenodo.org/badge/latestdoi/277720718)
 
 
 [SLEEP]: https://nodef.github.io/extra-async-function/modules.html#SLEEP
