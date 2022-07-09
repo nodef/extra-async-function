@@ -1,1 +1,2 @@
 https://github.com/sindresorhus/promise-fun
+lazy(): lazy version of a function (lazy parameter evaluation)
