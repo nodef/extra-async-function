@@ -8,35 +8,94 @@ import {Resolver} from "extra-function";
 // =========
 
 /**
- * Sleep for specified duration.
- * @param t sleep time (ms)
+ * Resolve all the arguments passed, as an array.
+ * @param args arguments
+ * @returns [...args]
  */
-export function SLEEP(t: number): Promise<void> {
-  return new Promise(resolve => setTimeout(resolve, t));
+export function ARGUMENTS(...args: any[]): Promise<any[]> {
+  return Promise.all(args);
+}
+
+
+/**
+ * Do nothing.
+ * @param args arguments (ignored)
+ */
+export async function NOOP(...args: any[]): Promise<void> {}
+
+
+/**
+ * Return the same (first) value.
+ * @param v a value
+ * @returns v
+ */
+export async function IDENTITY<T>(v: T): T {
+  return v;
+}
+
+
+import {COMPARE as COMPARE_SYNC} from "extra-function";
+
+/**
+ * Compare two async values.
+ * @param a an async value
+ * @param b another async value
+ * @returns a<b: -1, a=b: 0, a>b: 1
+ */
+export async function COMPARE<T>(a: T | Promise<T>, b: T | Promise<T>): Promise<number> {
+  return COMPARE_SYNC(await a, await b);
 }
 
 
 
 
-// METHODS
-// =======
+// METHODS (BUILTIN)
+// =================
+
+// ABOUT
+// -----
+
+export {name}   from "extra-function";
+export {length} from "extra-function";
+export {length as arity} from "extra-function";
+
+
+
+
+// BINDING
+// -------
+
+export {bind} from "extra-function";
+
+
+
+
+// INVOCATION
+// ----------
+
+export {call}  from "extra-function";
+export {apply} from "extra-function";
+
+
+
+
+// METHODS (CUSTOM)
+// ================
 
 // ABOUT
 // -----
 
 export {isAsync as is} from "extra-function";
-export {signature}  from "extra-function";
-export {name}       from "extra-function";
-export {parameters} from "extra-function";
-export {arity}      from "extra-function";
+export {isGenerator}   from "extra-function";
 
 
 
 
-// BINDING THIS
-// ------------
+// CONTEXT
+// -------
 
-export {bind} from "extra-function";
+export {contextify}   from "extra-function";
+export {decontextify} from "extra-function";
 
 
 
@@ -63,7 +122,7 @@ export {Resolver}  from "extra-function";
 
 
 /**
- * Generate result-cached version of a function.
+ * Generate result-cached version of an async function.
  * @param x an async function
  * @param fr async resolver ((...args) => unique key) [IDENTITY]
  * @param cache result cache [Map()]
@@ -88,11 +147,14 @@ export function memoize(x: Function, fr: Resolver=null, cache: Map<any, any>=nul
 // PARAMETER MANIPULATION
 // ----------------------
 
-export {reverse}  from "extra-function";
-export {spread}   from "extra-function";
-export {unspread} from "extra-function";
-export {wrap}     from "extra-function";
-export {unwrap}   from "extra-function";
+export {reverse}     from "extra-function";
+export {spread}      from "extra-function";
+export {unspread}    from "extra-function";
+export {attach}      from "extra-function";
+export {attachRight} from "extra-function";
+export {reverse as flip}   from "extra-function";
+export {attach as partial} from "extra-function";
+export {attachRight as partialRight} from "extra-function";
 
 
 
@@ -141,28 +203,42 @@ export {curryRight} from "extra-function";
 // ------------
 
 export {InvocationControl} from "extra-function";
+export {defer} from "extra-function";
 export {delay} from "extra-function";
 
 
 
 
-// RATE CONTROL
-// ------------
+// RATE CONTROL (COUNT)
+// --------------------
 
-export {limitUse}      from "extra-function";
-export {debounce}      from "extra-function";
-export {debounceEarly} from "extra-function";
-export {throttle}      from "extra-function";
-export {throttleEarly} from "extra-function";
+export {restrict}       from "extra-function";
+export {restrictOnce}   from "extra-function";
+export {restrictBefore} from "extra-function";
+export {restrictAfter}  from "extra-function";
+export {restrictOnce   as once}   from "extra-function";
+export {restrictBefore as before} from "extra-function";
+export {restrictAfter  as after}  from "extra-function";
+
+
+
+
+// RATE CONTROL (TIME)
+// -------------------
+
+export {debounce}       from "extra-function";
+export {debounceEarly}  from "extra-function";
+export {throttle}       from "extra-function";
+export {throttleEarly}  from "extra-function";
 
 
 // TODO: Is a generator function better for this?
-function backoffRetryRec(x: Function, args: any[], err: any, n: number, N: number, t: number, T: number, tf: number): void {
-  if (N>=0 && n>=N) throw err;
-  if (T>=0 && t>=T) throw err;
-  try { return x(...args, err); }
-  catch(e) { setTimeout(() => backoffRetryRec(x, args, e, n+1, N, t*tf, T, tf), t); }
-}
+// function backoffRetryRec(x: Function, args: any[], err: any, n: number, N: number, t: number, T: number, tf: number): void {
+//   if (N>=0 && n>=N) throw err;
+//   if (T>=0 && t>=T) throw err;
+//   try { return x(...args, err); }
+//   catch(e) { setTimeout(() => backoffRetryRec(x, args, e, n+1, N, t*tf, T, tf), t); }
+// }
 
 /**
  * TODO: Generate exponential-backoff-retried version of a function.
@@ -172,7 +248,7 @@ function backoffRetryRec(x: Function, args: any[], err: any, n: number, N: numbe
  * @param T maximum retry time [-1 ⇒ none]
  * @param tf retry time factor [2]
  */
-function backoffRetry(x: Function, N: number, t: number, T: number=-1, tf: number=2): Function {
-  return (...args: any[]) => backoffRetryRec(x, args, null, 0, N, t, T, tf);
-}
+// function backoffRetry(x: Function, N: number, t: number, T: number=-1, tf: number=2): Function {
+//   return (...args: any[]) => backoffRetryRec(x, args, null, 0, N, t, T, tf);
+// }
 // - TODO

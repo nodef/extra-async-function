@@ -1,5 +1,5 @@
 import {sleep}          from "extra-sleep";
-import * as funcxion    from "../src";
+import * as asyncFunction    from "../src";
 import {ARGUMENTS}      from "../src";
 import {NOOP}           from "../src";
 import {IDENTITY}       from "../src";
@@ -10,7 +10,6 @@ import {bind}           from "../src";
 import {call}           from "../src";
 import {apply}          from "../src";
 import {is}             from "../src";
-import {isAsync}        from "../src";
 import {isGenerator}    from "../src";
 import {contextify}     from "../src";
 import {decontextify}   from "../src";
@@ -50,15 +49,15 @@ jest.setTimeout(15000);
 
 // 1. Basic tests.
 test("example1", () => {
-  var a = funcxion.composeRight(x => x*x, x => x+2);
+  var a = asyncFunction.composeRight(x => x*x, x => x+2);
   expect(a(10)).toBe(102);
   // → 102
 
-  var a = funcxion.curry((x, y) => x+y);
+  var a = asyncFunction.curry((x, y) => x+y);
   expect(a(2)(3)).toBe(5);
   // → 7
 
-  var a = funcxion.unspread(Math.max);
+  var a = asyncFunction.unspread(Math.max);
   expect(a([2, 3, 1])).toBe(3);
   // → 1.25
 });
@@ -158,14 +157,6 @@ test("is", () => {
   var a = is(async () => 0);
   expect(a).toBe(true);
   var a = is(0);
-  expect(a).toBe(false);
-});
-
-
-test("isAsync", () => {
-  var a = isAsync(async () => 0);
-  expect(a).toBe(true);
-  var a = isAsync(() => 0);
   expect(a).toBe(false);
 });
 
