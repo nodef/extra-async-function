@@ -78,9 +78,6 @@ async function example1() {
   var a = asyncFunction.unspread(async (...xs) => Math.max(...xs));
   await a([2, 3, 1]);
   // → 1.25
-
-  asyncFunction.parameters(async (x, y) => x+y);
-  // → [ 'x', 'y' ]
 }
 example1();
 ```

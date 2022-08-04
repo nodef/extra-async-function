@@ -1,5 +1,5 @@
-import {IDENTITY} from "extra-function";
 import {Resolver} from "extra-function";
+import {COMPARE as COMPARE_SYNC} from "extra-function";
 
 
 
@@ -29,12 +29,10 @@ export async function NOOP(...args: any[]): Promise<void> {}
  * @param v a value
  * @returns v
  */
-export async function IDENTITY<T>(v: T): T {
+export async function IDENTITY<T>(v: T): Promise<T> {
   return v;
 }
 
-
-import {COMPARE as COMPARE_SYNC} from "extra-function";
 
 /**
  * Compare two async values.

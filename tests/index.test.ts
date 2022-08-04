@@ -48,55 +48,55 @@ jest.setTimeout(15000);
 
 
 // 1. Basic tests.
-test("example1", () => {
-  var a = asyncFunction.composeRight(x => x*x, x => x+2);
-  expect(a(10)).toBe(102);
+test("example1", async () => {
+  var a = asyncFunction.composeRight(async x => x*x, async x => x+2);
+  expect(await a(10)).toBe(102);
   // → 102
 
-  var a = asyncFunction.curry((x, y) => x+y);
-  expect(a(2)(3)).toBe(5);
+  var a = asyncFunction.curry(async (x, y) => x+y);
+  expect(await a(2)(3)).toBe(5);
   // → 7
 
-  var a = asyncFunction.unspread(Math.max);
-  expect(a([2, 3, 1])).toBe(3);
+  var a = asyncFunction.unspread(async (...xs) => Math.max(...xs));
+  expect(await a([2, 3, 1])).toBe(3);
   // → 1.25
 });
 
 
 
 
-test("ARGUMENTS", () => {
-  var a = ARGUMENTS(1, 2);
+test("ARGUMENTS", async () => {
+  var a = await ARGUMENTS(1, 2);
   expect(a).toStrictEqual([1, 2]);
-  var a = ARGUMENTS("a", "b");
+  var a = await ARGUMENTS("a", Promise.resolve("b"));
   expect(a).toStrictEqual(["a", "b"]);
 });
 
 
-test("NOOP", () => {
-  var a = NOOP(1, 2);
+test("NOOP", async () => {
+  var a = await NOOP(1, 2);
   expect(a).toBeUndefined();
-  var a = NOOP("a", "b");
+  var a = await NOOP("a", Promise.resolve("b"));
   expect(a).toBeUndefined();
 });
 
 
-test("IDENTITY", () => {
-  var a = IDENTITY(1);
+test("IDENTITY", async () => {
+  var a = await IDENTITY(1);
   expect(a).toBe(1);
-  var b = IDENTITY("a");
+  var b = await IDENTITY(Promise.resolve("a"));
   expect(b).toBe("a");
 });
 
 
-test("COMPARE", () => {
-  var a = COMPARE(1, 2);
+test("COMPARE", async () => {
+  var a = await COMPARE(1, 2);
   expect(a).toBe(-1);
-  var a = COMPARE(2, 2);
+  var a = await COMPARE(2, 2);
   expect(a).toBe(0);
-  var a = COMPARE(3, 2);
+  var a = await COMPARE(3, 2);
   expect(a).toBe(1);
-  var a = COMPARE("a", "b");
+  var a = await COMPARE("a", Promise.resolve("b"));
   expect(a).toBe(-1);
 });
 
@@ -151,9 +151,9 @@ test("apply", () => {
 
 test("is", () => {
   var a = is(Object.keys);
-  expect(a).toBe(true);
+  expect(a).toBe(false);
   var a = is(() => 0);
-  expect(a).toBe(true);
+  expect(a).toBe(false);
   var a = is(async () => 0);
   expect(a).toBe(true);
   var a = is(0);
@@ -199,53 +199,53 @@ test("decontextify", () => {
 });
 
 
-test("negate", () => {
+test("negate", async () => {
   var fn = negate(isFinite);
-  expect(fn(Infinity)).toBe(true);
-  expect(fn(1)).toBe(false);
+  expect(await fn(Infinity)).toBe(true);
+  expect(await fn(1)).toBe(false);
   var fn = negate(isNaN);
-  expect(fn(1)).toBe(true);
-  expect(fn(NaN)).toBe(false);
+  expect(await fn(1)).toBe(true);
+  expect(await fn(Promise.resolve(NaN))).toBe(false);
 });
 
 
-test("memoize.1", () => {
+test("memoize.1", async () => {
   var calls = 0;
   function factorialRec(n: number) {
     if (n<=1) return 1;
     return n * factorialRec(n-1);
   }
-  function factorial(n: number) {
+  async function factorial(n: number) {
     ++calls;
     return factorialRec(n);
   }
   var fn = memoize(factorial);
-  expect(fn(3)).toBe(6);
-  expect(fn(4)).toBe(24);
-  expect(fn(5)).toBe(120);
-  expect(fn(3)).toBe(6);
-  expect(fn(4)).toBe(24);
-  expect(fn(5)).toBe(120);
+  expect(await fn(3)).toBe(6);
+  expect(await fn(4)).toBe(24);
+  expect(await fn(5)).toBe(120);
+  expect(await fn(3)).toBe(6);
+  expect(await fn(4)).toBe(24);
+  expect(await fn(5)).toBe(120);
   expect(calls).toBe(3);
 });
 
 
-test("memoize.2", () => {
+test("memoize.2", async () => {
   var calls = 0;
-  function hypot(x: number, y: number) {
+  async function hypot(x: number, y: number) {
     ++calls;
     return Math.hypot(x, y);
   }
-  function resolver(x: number, y: number) {
+  async function resolver(x: number, y: number) {
     return 4093*y + x;  // a hash
   }
   var fn = memoize(hypot, resolver);
-  expect(fn(3,  4)).toBe(5);
-  expect(fn(6,  8)).toBe(10);
-  expect(fn(5, 12)).toBe(13);
-  expect(fn(3,  4)).toBe(5);
-  expect(fn(6,  8)).toBe(10);
-  expect(fn(5, 12)).toBe(13);
+  expect(await fn(3,  4)).toBe(5);
+  expect(await fn(6,  8)).toBe(10);
+  expect(await fn(5, 12)).toBe(13);
+  expect(await fn(3,  4)).toBe(5);
+  expect(await fn(6,  8)).toBe(10);
+  expect(await fn(5, 12)).toBe(13);
   expect(calls).toBe(3);
 });
 // - https://en.wikipedia.org/wiki/Integer_triangle
@@ -315,23 +315,23 @@ test("attachRight", () => {
 });
 
 
-test("compose", () => {
+test("compose", async () => {
   var fn = compose();
-  expect(fn()).toBeUndefined();
-  var fn = compose(Math.sqrt, Math.abs);
-  expect(fn(-64)).toBe(8);    // Math.sqrt(Math.abs(-64))
+  expect(await fn()).toBeUndefined();
+  var fn = compose(Math.sqrt, async x => Math.abs(x));
+  expect(await fn(-64)).toBe(8);    // Math.sqrt(Math.abs(-64))
   var fn = compose(Math.sqrt, Math.min);
-  expect(fn(22, 9)).toBe(3);  // Math.sqrt(Math.min(22, 9))
+  expect(await fn(22, 9)).toBe(3);  // Math.sqrt(Math.min(22, 9))
 });
 
 
-test("composeRight", () => {
+test("composeRight", async () => {
   var fn = composeRight();
-  expect(fn()).toBeUndefined();
-  var fn = composeRight(Math.abs, Math.sqrt);
-  expect(fn(-64)).toBe(8);    // Math.sqrt(Math.abs(-64))
+  expect(await fn()).toBeUndefined();
+  var fn = composeRight(async x => Math.abs(x), Math.sqrt);
+  expect(await fn(-64)).toBe(8);    // Math.sqrt(Math.abs(-64))
   var fn = composeRight(Math.min, Math.sqrt);
-  expect(fn(22, 9)).toBe(3);  // Math.sqrt(Math.min(22, 9))
+  expect(await fn(22, 9)).toBe(3);  // Math.sqrt(Math.min(22, 9))
 });
 
 
