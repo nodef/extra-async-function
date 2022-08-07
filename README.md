@@ -10,35 +10,30 @@ An [async function] is a function that delivers its [result asynchronously]
 includes methods for transforming *async functions*. The **result** of an async
 function can be manipulated with [negate]. If a *pure* async function is
 expensive, its results can **cached** with [memoize]. **Parameters** of a
-function can be manipulated with [reverse], [spread], [unspread], [wrap],
-[unwrap]. [reverse] flips the order of parameters, [spread] spreads the first
-array parameter of a function, [unspread] combines all parameters into the first
-parameter (array), [wrap] adds ignored parameters to the left/right of a
-function's parameters, and [unwrap] removes common prefix and suffix parameters
-to a function (by passing known constant values as prefix/suffix). If you want
-some **functional behavior**, [compose], [composeRight], [curry], and
-[curryRight] can be used. [composeRight] is also known as [pipe-forward
-operator] or [function chaining]. If you are unfamiliar, [Haskell] is a great
-purely functional language, and there is great [haskell beginner guide] to learn
-from.
+function can be manipulated with [reverse], [spread], [unspread]. [reverse]
+flips the order of parameters, [spread] spreads the first array parameter of a
+function, and [unspread] combines all parameters into the first parameter
+(array). If you want some **functional behavior**, [compose], [composeRight],
+[curry], and [curryRight] can be used. [composeRight] is also known as
+[pipe-forward operator] or [function chaining]. If you are unfamiliar, [Haskell]
+is a great purely functional language, and there is great [haskell beginner
+guide] to learn from.
 
 To control invocation **time** of a function, use [delay]. A function can be
-**rate controlled** with [limitUse], [debounce], [debounceEarly], [throttle],
-[throttleEarly]. [limitUse] controls the number of times a function can be
-called, and is useful when you want to enforce a function to be called only
-*once*, the first n times (*before*), or *after* n times. [debounce] and
-[debounceEarly] prevent the invocation of a function during **hot** periods
-(when there are too many calls), and can be used for example to issue AJAX
-request after user input has stopped (for certain delay time). [throttle] and
-[throttleEarly] can be used to limit the rate of invocation of a function, and
-can be used for example to minimize system usage when a user is [constantly
-refreshing a webpage]. Except [limitUse], all *rate/time control* methods can be
-*flushed* (`flush()`) to invoke the target function immediately, or *cleared*
-(`clear()`) to disable invocation of the target function.
+**rate controlled** with [debounce], [debounceEarly], [throttle],
+[throttleEarly]. [debounce] and [debounceEarly] prevent the invocation of a
+function during **hot** periods (when there are too many calls), and can be used
+for example to issue AJAX request after user input has stopped (for certain
+delay time). [throttle] and [throttleEarly] can be used to limit the rate of
+invocation of a function, and can be used for example to minimize system usage
+when a user is [constantly refreshing a webpage]. Except [restrict], all
+*rate/time control* methods can be *flushed* (`flush()`) to invoke the target
+function immediately, or *cleared* (`clear()`) to disable invocation of the
+target function.
 
-In addition, [is], [signature], [name], [parameters], and [arity] obtain
-metadata (about) information on an async function. To attach a `this` to a
-function, use [bind]. A few generic async functions are also included: [SLEEP].
+In addition, [is], [name], and [length] obtain metadata (about) information on
+an async function. To attach a `this` to a function, use [bind]. A few generic
+async functions are also included: [ARGUMENTS], [NOOP], [IDENTITY], [COMPARE].
 
 This package is available in both *Node.js* and *Web* formats. The web format is
 exposed as `extra_async_function` standalone variable and can be loaded from
@@ -90,34 +85,48 @@ example1();
 
 | Property | Description |
 |  ----  |  ----  |
-| [SLEEP] | Sleep for specified duration. |
+| [ARGUMENTS] | Resolve all the arguments passed, as an array. |
+| [NOOP] | Do nothing. |
+| [IDENTITY] | Return the same (first) value. |
+| [COMPARE] | Compare two async values. |
+|  |  |
+| [name] | Get the name of a function. |
+| [length] | Get the number of parameters of a function. |
+|  |  |
+| [bind] | Bind this-object, and optional prefix arguments to a function. |
+|  |  |
+| [call] | Invoke a function with specified this-object, and arguments provided individually. |
+| [apply] | Invoke a function with specified this-object, and arguments provided as an array. |
 |  |  |
 | [is] | Check if value is an async function. |
-| [signature] | Get the signature of a function. |
-| [name] | Get the name of a function. |
-| [parameters] | Get the parameter names of a function. |
-| [arity] | Get the number of parameters of a function. |
+| [isGenerator] | Check if value is a generator function. |
 |  |  |
-| [bind] | Generate a function with bound this-object, and optional prefix arguments. |
+| [contextify] | Contextify a function by accepting the first parameter as this-object. |
+| [decontextify] | Decontextify a function by accepting this-object as the first argument. |
 |  |  |
 | [negate] | Generate a result-negated version of an async function. |
 |  |  |
-| [memoize] | Generate result-cached version of a function. |
+| [memoize] | Generate result-cached version of an async function. |
 |  |  |
 | [reverse] | Generate a parameter-reversed version of a function. |
 | [spread] | Generate a (first) parameter-spreaded version of a function. |
 | [unspread] | Generate a (first) parameter-collapsed version of a function. |
-| [wrap] | Generate a parameter-wrapped version of a function. |
-| [unwrap] | Generate a parameter-unwrapped version of a function. |
+| [attach] | Attach prefix arguments to leftmost parameters of a function. |
+| [attachRight] | Attach suffix arguments to rightmost parameters of a function. |
 |  |  |
 | [compose] | Compose async functions together, in applicative order. |
 | [composeRight] | Compose async functions together, such that result is piped forward. |
 | [curry] | Generate curried version of a function. |
 | [curryRight] | Generate right-curried version of a function. |
 |  |  |
+| [defer] | Generate deferred version of a function, that executes after the current stack has cleared. |
 | [delay] | Generate delayed version of a function. |
 |  |  |
-| [limitUse] | Generate limited-use version of a function. |
+| [restrict] | Generate restricted-use version of a function. |
+| [restrictOnce] | Restrict a function to be used only once. |
+| [restrictBefore] | Restrict a function to be used only upto a certain number of calls. |
+| [restrictAfter] | Restrict a function to be used only after a certain number of calls. |
+|  |  |
 | [debounce] | Generate debounced version of a function. |
 | [debounceEarly] | Generate leading-edge debounced version of a function. |
 | [throttle] | Generate throttled version of a function. |
@@ -148,29 +157,42 @@ example1();
 
 [![](https://img.youtube.com/vi/pIQwho5EU8w/maxresdefault.jpg)](https://www.youtube.com/watch?v=pIQwho5EU8w)<br>
 [![DOI](https://zenodo.org/badge/277720718.svg)](https://zenodo.org/badge/latestdoi/277720718)
+[![Coverage Status](https://coveralls.io/repos/github/nodef/extra-async-function/badge.svg?branch=master)](https://coveralls.io/github/nodef/extra-async-function?branch=master)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/8e1e922c3b1ea166857b/test_coverage)](https://codeclimate.com/github/nodef/extra-async-function/test_coverage)
+[![Maintainability](https://api.codeclimate.com/v1/badges/8e1e922c3b1ea166857b/maintainability)](https://codeclimate.com/github/nodef/extra-async-function/maintainability)
 
 
-[SLEEP]: https://nodef.github.io/extra-async-function/modules.html#SLEEP
-[is]: https://nodef.github.io/extra-async-function/modules.html#is
-[signature]: https://nodef.github.io/extra-async-function/modules.html#signature
-[name]: https://nodef.github.io/extra-async-function/modules.html#name
-[parameters]: https://nodef.github.io/extra-async-function/modules.html#parameters
-[arity]: https://nodef.github.io/extra-async-function/modules.html#arity
-[bind]: https://nodef.github.io/extra-async-function/modules.html#bind
-[negate]: https://nodef.github.io/extra-async-function/modules.html#negate
-[memoize]: https://nodef.github.io/extra-async-function/modules.html#memoize
-[reverse]: https://nodef.github.io/extra-async-function/modules.html#reverse
-[spread]: https://nodef.github.io/extra-async-function/modules.html#spread
-[unspread]: https://nodef.github.io/extra-async-function/modules.html#unspread
-[wrap]: https://nodef.github.io/extra-async-function/modules.html#wrap
-[unwrap]: https://nodef.github.io/extra-async-function/modules.html#unwrap
-[compose]: https://nodef.github.io/extra-async-function/modules.html#compose
-[composeRight]: https://nodef.github.io/extra-async-function/modules.html#composeRight
-[curry]: https://nodef.github.io/extra-async-function/modules.html#curry
-[curryRight]: https://nodef.github.io/extra-async-function/modules.html#curryRight
-[delay]: https://nodef.github.io/extra-async-function/modules.html#delay
-[limitUse]: https://nodef.github.io/extra-async-function/modules.html#limitUse
-[debounce]: https://nodef.github.io/extra-async-function/modules.html#debounce
-[debounceEarly]: https://nodef.github.io/extra-async-function/modules.html#debounceEarly
-[throttle]: https://nodef.github.io/extra-async-function/modules.html#throttle
-[throttleEarly]: https://nodef.github.io/extra-async-function/modules.html#throttleEarly
+[ARGUMENTS]: https://nodef.github.io/extra-async-function/functions/ARGUMENTS.html
+[NOOP]: https://nodef.github.io/extra-async-function/functions/NOOP.html
+[IDENTITY]: https://nodef.github.io/extra-async-function/functions/IDENTITY.html
+[COMPARE]: https://nodef.github.io/extra-async-function/functions/COMPARE.html
+[is]: https://nodef.github.io/extra-async-function/functions/is.html
+[name]: https://nodef.github.io/extra-async-function/functions/name.html
+[bind]: https://nodef.github.io/extra-async-function/functions/bind.html
+[negate]: https://nodef.github.io/extra-async-function/functions/negate.html
+[memoize]: https://nodef.github.io/extra-async-function/functions/memoize.html
+[reverse]: https://nodef.github.io/extra-async-function/functions/reverse.html
+[spread]: https://nodef.github.io/extra-async-function/functions/spread.html
+[unspread]: https://nodef.github.io/extra-async-function/functions/unspread.html
+[compose]: https://nodef.github.io/extra-async-function/functions/compose.html
+[composeRight]: https://nodef.github.io/extra-async-function/functions/composeRight.html
+[curry]: https://nodef.github.io/extra-async-function/functions/curry.html
+[curryRight]: https://nodef.github.io/extra-async-function/functions/curryRight.html
+[delay]: https://nodef.github.io/extra-async-function/functions/delay.html
+[debounce]: https://nodef.github.io/extra-async-function/functions/debounce.html
+[debounceEarly]: https://nodef.github.io/extra-async-function/functions/debounceEarly.html
+[throttle]: https://nodef.github.io/extra-async-function/functions/throttle.html
+[throttleEarly]: https://nodef.github.io/extra-async-function/functions/throttleEarly.html
+[length]: https://nodef.github.io/extra-async-function/functions/length.html
+[call]: https://nodef.github.io/extra-async-function/functions/call.html
+[apply]: https://nodef.github.io/extra-async-function/functions/apply.html
+[isGenerator]: https://nodef.github.io/extra-async-function/functions/isGenerator.html
+[contextify]: https://nodef.github.io/extra-async-function/functions/contextify.html
+[decontextify]: https://nodef.github.io/extra-async-function/functions/decontextify.html
+[attach]: https://nodef.github.io/extra-async-function/functions/attach.html
+[attachRight]: https://nodef.github.io/extra-async-function/functions/attachRight.html
+[defer]: https://nodef.github.io/extra-async-function/functions/defer.html
+[restrict]: https://nodef.github.io/extra-async-function/functions/restrict.html
+[restrictOnce]: https://nodef.github.io/extra-async-function/functions/restrictOnce.html
+[restrictBefore]: https://nodef.github.io/extra-async-function/functions/restrictBefore.html
+[restrictAfter]: https://nodef.github.io/extra-async-function/functions/restrictAfter.html
