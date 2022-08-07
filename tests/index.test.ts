@@ -1,39 +1,12 @@
-import {sleep}          from "extra-sleep";
 import * as asyncFunction    from "../src";
 import {ARGUMENTS}      from "../src";
 import {NOOP}           from "../src";
 import {IDENTITY}       from "../src";
 import {COMPARE}        from "../src";
-import {name}           from "../src";
-import {length}         from "../src";
-import {bind}           from "../src";
-import {call}           from "../src";
-import {apply}          from "../src";
-import {is}             from "../src";
-import {isGenerator}    from "../src";
-import {contextify}     from "../src";
-import {decontextify}   from "../src";
 import {negate}         from "../src";
 import {memoize}        from "../src";
-import {reverse}        from "../src";
-import {spread}         from "../src";
-import {unspread}       from "../src";
-import {attach}         from "../src";
-import {attachRight}    from "../src";
 import {compose}        from "../src";
 import {composeRight}   from "../src";
-import {curry}          from "../src";
-import {curryRight}     from "../src";
-import {defer}          from "../src";
-import {delay}          from "../src";
-import {restrict}       from "../src";
-import {restrictOnce}   from "../src";
-import {restrictBefore} from "../src";
-import {restrictAfter}  from "../src";
-import {debounce}       from "../src";
-import {debounceEarly}  from "../src";
-import {throttle}       from "../src";
-import {throttleEarly}  from "../src";
 
 
 
