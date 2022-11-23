@@ -1,5 +1,64 @@
-import {Resolver} from "extra-function";
-import {COMPARE as COMPARE_SYNC} from "extra-function";
+import {
+  Resolver,
+  COMPARE as COMPARE_SYNC,
+} from "extra-function";
+
+
+
+
+// RE-EXPORTS
+// ==========
+
+export {
+  // METHODS (BUILTIN)
+  // About
+  name,
+  length,
+  length as arity,
+  // Binding
+  bind,
+  // Invocation
+  call,
+  apply,
+  // METHODS (CUSTOM)
+  // About
+  isAsync as is,
+  isGenerator,
+  // Context
+  contextify,
+  decontextify,
+  // Result caching
+  Resolver,
+  // Parameter manipulation
+  reverse,
+  spread,
+  unspread,
+  attach,
+  attachRight,
+  reverse     as flip,
+  attach      as partial,
+  attachRight as partialRight,
+  // Functional behavior
+  curry,
+  curryRight,
+  // Time control
+  InvocationControl,
+  defer,
+  delay,
+  // Rate control (count)
+  restrict,
+  restrictOnce,
+  restrictBefore,
+  restrictAfter,
+  restrictOnce   as once,
+  restrictBefore as before,
+  restrictAfter  as after,
+  // Rate control (time)
+  debounce,
+  debounceEarly,
+  throttle,
+  throttleEarly,
+} from "extra-function";
 
 
 
@@ -47,56 +106,8 @@ export async function COMPARE<T>(a: T | Promise<T>, b: T | Promise<T>): Promise<
 
 
 
-// METHODS (BUILTIN)
-// =================
-
-// ABOUT
-// -----
-
-export {name}   from "extra-function";
-export {length} from "extra-function";
-export {length as arity} from "extra-function";
-
-
-
-
-// BINDING
-// -------
-
-export {bind} from "extra-function";
-
-
-
-
-// INVOCATION
-// ----------
-
-export {call}  from "extra-function";
-export {apply} from "extra-function";
-
-
-
-
 // METHODS (CUSTOM)
 // ================
-
-// ABOUT
-// -----
-
-export {isAsync as is} from "extra-function";
-export {isGenerator}   from "extra-function";
-
-
-
-
-// CONTEXT
-// -------
-
-export {contextify}   from "extra-function";
-export {decontextify} from "extra-function";
-
-
-
 
 // RESULT MANIPULATION
 // -------------------
@@ -115,9 +126,6 @@ export function negate(x: Function): Function {
 
 // RESULT CACHING
 // --------------
-
-export {Resolver}  from "extra-function";
-
 
 /**
  * Generate result-cached version of an async function.
@@ -138,21 +146,6 @@ export function memoize(x: Function, fr: Resolver=null, cache: Map<any, any>=nul
 }
 // - https://www.npmjs.com/package/memoizee
 // - https://www.npmjs.com/package/memoizerific
-
-
-
-
-// PARAMETER MANIPULATION
-// ----------------------
-
-export {reverse}     from "extra-function";
-export {spread}      from "extra-function";
-export {unspread}    from "extra-function";
-export {attach}      from "extra-function";
-export {attachRight} from "extra-function";
-export {reverse as flip}   from "extra-function";
-export {attach as partial} from "extra-function";
-export {attachRight as partialRight} from "extra-function";
 
 
 
@@ -191,44 +184,10 @@ export function composeRight(...xs: Function[]): Function {
 // - https://www.npmjs.com/package/chain-function
 
 
-export {curry}      from "extra-function";
-export {curryRight} from "extra-function";
-
-
-
-
-// TIME CONTROL
-// ------------
-
-export {InvocationControl} from "extra-function";
-export {defer} from "extra-function";
-export {delay} from "extra-function";
-
-
-
-
-// RATE CONTROL (COUNT)
-// --------------------
-
-export {restrict}       from "extra-function";
-export {restrictOnce}   from "extra-function";
-export {restrictBefore} from "extra-function";
-export {restrictAfter}  from "extra-function";
-export {restrictOnce   as once}   from "extra-function";
-export {restrictBefore as before} from "extra-function";
-export {restrictAfter  as after}  from "extra-function";
-
-
 
 
 // RATE CONTROL (TIME)
 // -------------------
-
-export {debounce}       from "extra-function";
-export {debounceEarly}  from "extra-function";
-export {throttle}       from "extra-function";
-export {throttleEarly}  from "extra-function";
-
 
 // TODO: Is a generator function better for this?
 // function backoffRetryRec(x: Function, args: any[], err: any, n: number, N: number, t: number, T: number, tf: number): void {

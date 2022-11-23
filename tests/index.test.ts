@@ -1,17 +1,19 @@
-import * as asyncFunction    from "../src";
-import {ARGUMENTS}      from "../src";
-import {NOOP}           from "../src";
-import {IDENTITY}       from "../src";
-import {COMPARE}        from "../src";
-import {negate}         from "../src";
-import {memoize}        from "../src";
-import {compose}        from "../src";
-import {composeRight}   from "../src";
+import * as asyncFunction from "../src";
+import {
+  ARGUMENTS,
+  NOOP,
+  IDENTITY,
+  COMPARE,
+  negate,
+  memoize,
+  compose,
+  composeRight,
+} from "../src";
 
 
 
 
-// Config
+// CONFIG
 jest.retryTimes(3);
 jest.setTimeout(15000);
 // - https://stackoverflow.com/a/71599782/1413259
@@ -37,6 +39,9 @@ test("example1", async () => {
 
 
 
+
+// CONSTANTS
+// =========
 
 test("ARGUMENTS", async () => {
   var a = await ARGUMENTS(1, 2);
@@ -74,6 +79,14 @@ test("COMPARE", async () => {
 });
 
 
+
+
+// METHODS (CUSTOM)
+// ================
+
+// RESULT MANIPULATION
+// -------------------
+
 test("negate", async () => {
   var fn = negate(isFinite);
   expect(await fn(Infinity)).toBe(true);
@@ -83,6 +96,11 @@ test("negate", async () => {
   expect(await fn(Promise.resolve(NaN))).toBe(false);
 });
 
+
+
+
+// RESULT CACHING
+// --------------
 
 test("memoize.1", async () => {
   var calls = 0;
@@ -125,6 +143,11 @@ test("memoize.2", async () => {
 });
 // - https://en.wikipedia.org/wiki/Integer_triangle
 
+
+
+
+// FUNCTIONAL BEHAVIOUR
+// --------------------
 
 test("compose", async () => {
   var fn = compose();
