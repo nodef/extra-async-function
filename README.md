@@ -1,23 +1,21 @@
-A collection of ways for transforming async functions.<br>
+An [async function] is a function that delivers its [result asynchronously] (through [Promise]).<br>
 📦 [Node.js](https://www.npmjs.com/package/extra-async-function),
 🌐 [Web](https://www.npmjs.com/package/extra-async-function.web),
 📜 [Files](https://unpkg.com/extra-async-function/),
 📰 [JSDoc](https://nodef.github.io/extra-async-function/),
 📘 [Wiki](https://github.com/nodef/extra-async-function/wiki/).
 
-An [async function] is a function that delivers its [result asynchronously]
-(through [Promise]). This package is an *variant* of [extra-function], and
-includes methods for transforming *async functions*. The **result** of an async
-function can be manipulated with [negate]. If a *pure* async function is
-expensive, its results can **cached** with [memoize]. **Parameters** of a
-function can be manipulated with [reverse], [spread], [unspread]. [reverse]
-flips the order of parameters, [spread] spreads the first array parameter of a
-function, and [unspread] combines all parameters into the first parameter
-(array). If you want some **functional behavior**, [compose], [composeRight],
-[curry], and [curryRight] can be used. [composeRight] is also known as
-[pipe-forward operator] or [function chaining]. If you are unfamiliar, [Haskell]
-is a great purely functional language, and there is great [haskell beginner
-guide] to learn from.
+This package is an *variant* of [extra-function], and includes methods for
+transforming *async functions*. The **result** of an async function can be
+manipulated with [negate]. If a *pure* async function is expensive, its results
+can **cached** with [memoize]. **Parameters** of a function can be manipulated
+with [reverse], [spread], [unspread]. [reverse] flips the order of parameters,
+[spread] spreads the first array parameter of a function, and [unspread]
+combines all parameters into the first parameter (array). If you want some
+**functional behavior**, [compose], [composeRight], [curry], and [curryRight]
+can be used. [composeRight] is also known as [pipe-forward operator] or
+[function chaining]. If you are unfamiliar, [Haskell] is a great purely
+functional language, and there is great [haskell beginner guide] to learn from.
 
 To control invocation **time** of a function, use [delay]. A function can be
 **rate controlled** with [debounce], [debounceEarly], [throttle],
@@ -35,9 +33,9 @@ In addition, [is], [name], and [length] obtain metadata (about) information on
 an async function. To attach a `this` to a function, use [bind]. A few generic
 async functions are also included: [ARGUMENTS], [NOOP], [IDENTITY], [COMPARE].
 
-This package is available in both *Node.js* and *Web* formats. The web format is
-exposed as `extra_async_function` standalone variable and can be loaded from
-[jsDelivr CDN].
+This package is available in *Node.js* and *Web* formats. To use it on the web,
+simply use the `extra_async_function` global variable after loading with a `<script>`
+tag from the [jsDelivr CDN].
 
 [async function]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function
 [result asynchronously]: https://exploringjs.com/impatient-js/ch_async-functions.html#async-constructs
@@ -56,21 +54,21 @@ exposed as `extra_async_function` standalone variable and can be loaded from
 
 
 ```javascript
-const asyncFunction = require('extra-async-function');
-// import * as asyncFunction from "extra-async-function";
-// import * as asyncFunction from "https://unpkg.com/extra-async-function/index.mjs"; (deno)
+const xasyncfn = require('extra-async-function');
+// import * as xasyncfn from "extra-async-function";
+// import * as xasyncfn from "https://unpkg.com/extra-async-function/index.mjs"; (deno)
 
 // 1. Basic tests.
 async function example1() {
-  var a = asyncFunction.composeRight(async x => x*x, async x => x+2);
+  var a = xasyncfn.composeRight(async x => x*x, async x => x+2);
   await a(10);
   // → 102
 
-  var a = asyncFunction.curry(async (x, y) => x+y);
+  var a = xasyncfn.curry(async (x, y) => x+y);
   await a(2)(3);
   // → 7
 
-  var a = asyncFunction.unspread(async (...xs) => Math.max(...xs));
+  var a = xasyncfn.unspread(async (...xs) => Math.max(...xs));
   await a([2, 3, 1]);
   // → 1.25
 }

@@ -1,4 +1,4 @@
-import * as asyncFunction from "../src";
+import * as xasyncfn from "../src";
 import {
   ARGUMENTS,
   NOOP,
@@ -24,15 +24,15 @@ jest.setTimeout(15000);
 
 // 1. Basic tests.
 test("example1", async () => {
-  var a = asyncFunction.composeRight(async x => x*x, async x => x+2);
+  var a = xasyncfn.composeRight(async x => x*x, async x => x+2);
   expect(await a(10)).toBe(102);
   // → 102
 
-  var a = asyncFunction.curry(async (x, y) => x+y);
+  var a = xasyncfn.curry(async (x, y) => x+y);
   expect(await a(2)(3)).toBe(5);
   // → 7
 
-  var a = asyncFunction.unspread(async (...xs) => Math.max(...xs));
+  var a = xasyncfn.unspread(async (...xs) => Math.max(...xs));
   expect(await a([2, 3, 1])).toBe(3);
   // → 1.25
 });
