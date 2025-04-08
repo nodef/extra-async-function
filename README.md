@@ -159,7 +159,7 @@ example1();
 [![Coverage Status](https://coveralls.io/repos/github/nodef/extra-async-function/badge.svg?branch=master)](https://coveralls.io/github/nodef/extra-async-function?branch=master)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/8e1e922c3b1ea166857b/test_coverage)](https://codeclimate.com/github/nodef/extra-async-function/test_coverage)
 [![Maintainability](https://api.codeclimate.com/v1/badges/8e1e922c3b1ea166857b/maintainability)](https://codeclimate.com/github/nodef/extra-async-function/maintainability)
-
+![](https://ga-beacon.deno.dev/G-RC63DPBH3P:SH3Eq-NoQ9mwgYeHWxu7cw/github.com/nodef/extra-async-function)
 
 [ARGUMENTS]: https://github.com/nodef/extra-async-function/wiki/ARGUMENTS
 [NOOP]: https://github.com/nodef/extra-async-function/wiki/NOOP
