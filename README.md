@@ -1,9 +1,9 @@
 An [async function] is a function that delivers its [result asynchronously] (through [Promise]).<br>
-📦 [Node.js](https://www.npmjs.com/package/extra-async-function),
-🌐 [Web](https://www.npmjs.com/package/extra-async-function.web),
-📜 [Files](https://unpkg.com/extra-async-function/),
-📰 [JSDoc](https://nodef.github.io/extra-async-function/),
-📘 [Wiki](https://github.com/nodef/extra-async-function/wiki/).
+
+▌
+📦 [JSR](https://jsr.io/@nodef/extra-async-function),
+📦 [NPM](https://www.npmjs.com/package/extra-async-function),
+📰 [Docs](https://jsr.io/@nodef/extra-async-function/doc).
 
 This package is an *variant* of [extra-function], and includes methods for
 transforming *async functions*. The **result** of an async function can be
@@ -33,10 +33,6 @@ In addition, [is], [name], and [length] obtain metadata (about) information on
 an async function. To attach a `this` to a function, use [bind]. A few generic
 async functions are also included: [ARGUMENTS], [NOOP], [IDENTITY], [COMPARE].
 
-This package is available in *Node.js* and *Web* formats. To use it on the web,
-simply use the `extra_async_function` global variable after loading with a `<script>`
-tag from the [jsDelivr CDN].
-
 [async function]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function
 [result asynchronously]: https://exploringjs.com/impatient-js/ch_async-functions.html#async-constructs
 [Promise]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise
@@ -46,33 +42,25 @@ tag from the [jsDelivr CDN].
 [Haskell]: https://www.haskell.org
 [haskell beginner guide]: http://learnyouahaskell.com
 [constantly refreshing a webpage]: https://tenor.com/view/social-network-mark-zuckerberg-refresh-movie-jesse-eisenberg-gif-12095762
-[jsDelivr CDN]: https://cdn.jsdelivr.net/npm/extra-async-function.web/index.js
-
-> Stability: [Experimental](https://www.youtube.com/watch?v=L1j93RnIxEo).
 
 <br>
 
 
 ```javascript
-const xasyncfn = require('extra-async-function');
-// import * as xasyncfn from "extra-async-function";
-// import * as xasyncfn from "https://unpkg.com/extra-async-function/index.mjs"; (deno)
+import * as xasyncfn from "jsr:@nodef/extra-async-function";
 
 // 1. Basic tests.
-async function example1() {
-  var a = xasyncfn.composeRight(async x => x*x, async x => x+2);
-  await a(10);
-  // → 102
+var a = xasyncfn.composeRight(async x => x*x, async x => x+2);
+await a(10);
+// → 102
 
-  var a = xasyncfn.curry(async (x, y) => x+y);
-  await a(2)(3);
-  // → 7
+var a = xasyncfn.curry(async (x, y) => x+y);
+await a(2)(3);
+// → 7
 
-  var a = xasyncfn.unspread(async (...xs) => Math.max(...xs));
-  await a([2, 3, 1]);
-  // → 1.25
-}
-example1();
+var a = xasyncfn.unspread(async (...xs) => Math.max(...xs));
+await a([2, 3, 1]);
+// → 1.25
 ```
 
 <br>
@@ -153,45 +141,42 @@ example1();
 <br>
 
 
-[![](https://img.youtube.com/vi/pIQwho5EU8w/maxresdefault.jpg)](https://www.youtube.com/watch?v=pIQwho5EU8w)<br>
+[![](https://raw.githubusercontent.com/qb40/designs/gh-pages/0/image/11.png)](https://wolfram77.github.io)<br>
 [![ORG](https://img.shields.io/badge/org-nodef-green?logo=Org)](https://nodef.github.io)
-[![DOI](https://zenodo.org/badge/277720718.svg)](https://zenodo.org/badge/latestdoi/277720718)
-[![Coverage Status](https://coveralls.io/repos/github/nodef/extra-async-function/badge.svg?branch=master)](https://coveralls.io/github/nodef/extra-async-function?branch=master)
-[![Test Coverage](https://api.codeclimate.com/v1/badges/8e1e922c3b1ea166857b/test_coverage)](https://codeclimate.com/github/nodef/extra-async-function/test_coverage)
-[![Maintainability](https://api.codeclimate.com/v1/badges/8e1e922c3b1ea166857b/maintainability)](https://codeclimate.com/github/nodef/extra-async-function/maintainability)
 ![](https://ga-beacon.deno.dev/G-RC63DPBH3P:SH3Eq-NoQ9mwgYeHWxu7cw/github.com/nodef/extra-async-function)
 
-[ARGUMENTS]: https://github.com/nodef/extra-async-function/wiki/ARGUMENTS
-[NOOP]: https://github.com/nodef/extra-async-function/wiki/NOOP
-[IDENTITY]: https://github.com/nodef/extra-async-function/wiki/IDENTITY
-[COMPARE]: https://github.com/nodef/extra-async-function/wiki/COMPARE
-[is]: https://github.com/nodef/extra-async-function/wiki/is
-[name]: https://github.com/nodef/extra-async-function/wiki/name
-[bind]: https://github.com/nodef/extra-async-function/wiki/bind
-[negate]: https://github.com/nodef/extra-async-function/wiki/negate
-[memoize]: https://github.com/nodef/extra-async-function/wiki/memoize
-[reverse]: https://github.com/nodef/extra-async-function/wiki/reverse
-[spread]: https://github.com/nodef/extra-async-function/wiki/spread
-[unspread]: https://github.com/nodef/extra-async-function/wiki/unspread
-[compose]: https://github.com/nodef/extra-async-function/wiki/compose
-[composeRight]: https://github.com/nodef/extra-async-function/wiki/composeRight
-[curry]: https://github.com/nodef/extra-async-function/wiki/curry
-[curryRight]: https://github.com/nodef/extra-async-function/wiki/curryRight
-[delay]: https://github.com/nodef/extra-async-function/wiki/delay
-[debounce]: https://github.com/nodef/extra-async-function/wiki/debounce
-[debounceEarly]: https://github.com/nodef/extra-async-function/wiki/debounceEarly
-[throttle]: https://github.com/nodef/extra-async-function/wiki/throttle
-[throttleEarly]: https://github.com/nodef/extra-async-function/wiki/throttleEarly
-[length]: https://github.com/nodef/extra-async-function/wiki/length
-[call]: https://github.com/nodef/extra-async-function/wiki/call
-[apply]: https://github.com/nodef/extra-async-function/wiki/apply
-[isGenerator]: https://github.com/nodef/extra-async-function/wiki/isGenerator
-[contextify]: https://github.com/nodef/extra-async-function/wiki/contextify
-[decontextify]: https://github.com/nodef/extra-async-function/wiki/decontextify
-[attach]: https://github.com/nodef/extra-async-function/wiki/attach
-[attachRight]: https://github.com/nodef/extra-async-function/wiki/attachRight
-[defer]: https://github.com/nodef/extra-async-function/wiki/defer
-[restrict]: https://github.com/nodef/extra-async-function/wiki/restrict
-[restrictOnce]: https://github.com/nodef/extra-async-function/wiki/restrictOnce
-[restrictBefore]: https://github.com/nodef/extra-async-function/wiki/restrictBefore
-[restrictAfter]: https://github.com/nodef/extra-async-function/wiki/restrictAfter
+
+[ARGUMENTS]: https://jsr.io/@nodef/extra-async-function/doc/~/ARGUMENTS
+[NOOP]: https://jsr.io/@nodef/extra-async-function/doc/~/NOOP
+[IDENTITY]: https://jsr.io/@nodef/extra-async-function/doc/~/IDENTITY
+[COMPARE]: https://jsr.io/@nodef/extra-async-function/doc/~/COMPARE
+[is]: https://jsr.io/@nodef/extra-async-function/doc/~/is
+[name]: https://jsr.io/@nodef/extra-async-function/doc/~/name
+[bind]: https://jsr.io/@nodef/extra-async-function/doc/~/bind
+[negate]: https://jsr.io/@nodef/extra-async-function/doc/~/negate
+[memoize]: https://jsr.io/@nodef/extra-async-function/doc/~/memoize
+[reverse]: https://jsr.io/@nodef/extra-async-function/doc/~/reverse
+[spread]: https://jsr.io/@nodef/extra-async-function/doc/~/spread
+[unspread]: https://jsr.io/@nodef/extra-async-function/doc/~/unspread
+[compose]: https://jsr.io/@nodef/extra-async-function/doc/~/compose
+[composeRight]: https://jsr.io/@nodef/extra-async-function/doc/~/composeRight
+[curry]: https://jsr.io/@nodef/extra-async-function/doc/~/curry
+[curryRight]: https://jsr.io/@nodef/extra-async-function/doc/~/curryRight
+[delay]: https://jsr.io/@nodef/extra-async-function/doc/~/delay
+[debounce]: https://jsr.io/@nodef/extra-async-function/doc/~/debounce
+[debounceEarly]: https://jsr.io/@nodef/extra-async-function/doc/~/debounceEarly
+[throttle]: https://jsr.io/@nodef/extra-async-function/doc/~/throttle
+[throttleEarly]: https://jsr.io/@nodef/extra-async-function/doc/~/throttleEarly
+[length]: https://jsr.io/@nodef/extra-async-function/doc/~/length
+[call]: https://jsr.io/@nodef/extra-async-function/doc/~/call
+[apply]: https://jsr.io/@nodef/extra-async-function/doc/~/apply
+[isGenerator]: https://jsr.io/@nodef/extra-async-function/doc/~/isGenerator
+[contextify]: https://jsr.io/@nodef/extra-async-function/doc/~/contextify
+[decontextify]: https://jsr.io/@nodef/extra-async-function/doc/~/decontextify
+[attach]: https://jsr.io/@nodef/extra-async-function/doc/~/attach
+[attachRight]: https://jsr.io/@nodef/extra-async-function/doc/~/attachRight
+[defer]: https://jsr.io/@nodef/extra-async-function/doc/~/defer
+[restrict]: https://jsr.io/@nodef/extra-async-function/doc/~/restrict
+[restrictOnce]: https://jsr.io/@nodef/extra-async-function/doc/~/restrictOnce
+[restrictBefore]: https://jsr.io/@nodef/extra-async-function/doc/~/restrictBefore
+[restrictAfter]: https://jsr.io/@nodef/extra-async-function/doc/~/restrictAfter

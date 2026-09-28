@@ -1,4 +1,5 @@
-import * as xasyncfn from "../src";
+import {assertEquals} from "@std/assert";
+import * as xasyncfn from "./index.ts"
 import {
   ARGUMENTS,
   NOOP,
@@ -8,7 +9,7 @@ import {
   memoize,
   compose,
   composeRight,
-} from "../src";
+} from "./index.ts";
 
 
 
@@ -23,17 +24,18 @@ jest.setTimeout(15000);
 
 
 // 1. Basic tests.
-test("example1", async () => {
-  var a = xasyncfn.composeRight(async x => x*x, async x => x+2);
-  expect(await a(10)).toBe(102);
+Deno.test("example1", async () => {
+  let a;
+  a = xasyncfn.composeRight(async (x: number) => await x*x, async (x: number) => await x+2);
+  assertEquals(await a(10), 102);
   // → 102
 
-  var a = xasyncfn.curry(async (x, y) => x+y);
-  expect(await a(2)(3)).toBe(5);
+  a = xasyncfn.curry(async (x: number, y: number) => await x+y);
+  assertEquals(await a(2)(3), 5);
   // → 7
 
-  var a = xasyncfn.unspread(async (...xs) => Math.max(...xs));
-  expect(await a([2, 3, 1])).toBe(3);
+  a = xasyncfn.unspread(async (...xs: number[]) => Math.max(...xs));
+  assertEquals(await a([2, 3, 1]), 3);
   // → 1.25
 });
 
@@ -43,7 +45,7 @@ test("example1", async () => {
 // CONSTANTS
 // =========
 
-test("ARGUMENTS", async () => {
+Deno.test("ARGUMENTS", async () => {
   var a = await ARGUMENTS(1, 2);
   expect(a).toStrictEqual([1, 2]);
   var a = await ARGUMENTS("a", Promise.resolve("b"));
@@ -51,7 +53,7 @@ test("ARGUMENTS", async () => {
 });
 
 
-test("NOOP", async () => {
+Deno.test("NOOP", async () => {
   var a = await NOOP(1, 2);
   expect(a).toBeUndefined();
   var a = await NOOP("a", Promise.resolve("b"));
@@ -59,7 +61,7 @@ test("NOOP", async () => {
 });
 
 
-test("IDENTITY", async () => {
+Deno.test("IDENTITY", async () => {
   var a = await IDENTITY(1);
   expect(a).toBe(1);
   var b = await IDENTITY(Promise.resolve("a"));
@@ -67,7 +69,7 @@ test("IDENTITY", async () => {
 });
 
 
-test("COMPARE", async () => {
+Deno.test("COMPARE", async () => {
   var a = await COMPARE(1, 2);
   expect(a).toBe(-1);
   var a = await COMPARE(2, 2);
@@ -87,7 +89,7 @@ test("COMPARE", async () => {
 // RESULT MANIPULATION
 // -------------------
 
-test("negate", async () => {
+Deno.test("negate", async () => {
   var fn = negate(isFinite);
   expect(await fn(Infinity)).toBe(true);
   expect(await fn(1)).toBe(false);
@@ -102,7 +104,7 @@ test("negate", async () => {
 // RESULT CACHING
 // --------------
 
-test("memoize.1", async () => {
+Deno.test("memoize.1", async () => {
   var calls = 0;
   function factorialRec(n: number) {
     if (n<=1) return 1;
@@ -123,7 +125,7 @@ test("memoize.1", async () => {
 });
 
 
-test("memoize.2", async () => {
+Deno.test("memoize.2", async () => {
   var calls = 0;
   async function hypot(x: number, y: number) {
     ++calls;
@@ -149,7 +151,7 @@ test("memoize.2", async () => {
 // FUNCTIONAL BEHAVIOUR
 // --------------------
 
-test("compose", async () => {
+Deno.test("compose", async () => {
   var fn = compose();
   expect(await fn()).toBeUndefined();
   var fn = compose(Math.sqrt, async x => Math.abs(x));
@@ -159,11 +161,12 @@ test("compose", async () => {
 });
 
 
-test("composeRight", async () => {
-  var fn = composeRight();
-  expect(await fn()).toBeUndefined();
-  var fn = composeRight(async x => Math.abs(x), Math.sqrt);
-  expect(await fn(-64)).toBe(8);    // Math.sqrt(Math.abs(-64))
-  var fn = composeRight(Math.min, Math.sqrt);
-  expect(await fn(22, 9)).toBe(3);  // Math.sqrt(Math.min(22, 9))
+Deno.test("composeRight", async () => {
+  let fn;
+  fn = composeRight();
+  assertEquals(await fn(), undefined);
+  fn = composeRight(async (x: number) => await Math.abs(x), Math.sqrt);
+  assertEquals(await fn(-64), 8);    // Math.sqrt(Math.abs(-64))
+  fn = composeRight(Math.min, Math.sqrt);
+  assertEquals(await fn(22, 9), 3);  // Math.sqrt(Math.min(22, 9))
 });

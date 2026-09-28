@@ -1,7 +1,8 @@
 import {
-  Resolver,
+  type Function,
+  type Resolver,
   COMPARE as COMPARE_SYNC,
-} from "extra-function";
+} from "@nodef/extra-function";
 
 
 
@@ -28,7 +29,7 @@ export {
   contextify,
   decontextify,
   // Result caching
-  Resolver,
+  type Resolver,
   // Parameter manipulation
   reverse,
   spread,
@@ -42,7 +43,7 @@ export {
   curry,
   curryRight,
   // Time control
-  InvocationControl,
+  type InvocationControl,
   defer,
   delay,
   // Rate control (count)
@@ -58,7 +59,20 @@ export {
   debounceEarly,
   throttle,
   throttleEarly,
-} from "extra-function";
+} from "@nodef/extra-function";
+
+
+
+
+// TYPES
+// =====
+
+/**
+ * Unknown async function type.
+ * @params args arguments
+ * @returns unknown value
+ */
+export type AsyncFunction = (...args: any[]) => Promise<any>;
 
 
 
@@ -71,7 +85,7 @@ export {
  * @param args arguments
  * @returns [...args]
  */
-export function ARGUMENTS(...args: any[]): Promise<any[]> {
+export function ARGUMENTS(...args: unknown[]): Promise<unknown[]> {
   return Promise.all(args);
 }
 
@@ -80,7 +94,7 @@ export function ARGUMENTS(...args: any[]): Promise<any[]> {
  * Do nothing.
  * @param args arguments (ignored)
  */
-export async function NOOP(...args: any[]): Promise<void> {}
+export async function NOOP(..._args: unknown[]): Promise<void> {}
 
 
 /**
@@ -89,7 +103,7 @@ export async function NOOP(...args: any[]): Promise<void> {}
  * @returns v
  */
 export async function IDENTITY<T>(v: T): Promise<T> {
-  return v;
+  return await v;
 }
 
 
@@ -117,8 +131,8 @@ export async function COMPARE<T>(a: T | Promise<T>, b: T | Promise<T>): Promise<
  * @param x an async function
  * @returns (...args) => !x(...args)
  */
-export function negate(x: Function): Function {
-  return async (...args: any[]) => !(await x(...args));
+export function negate(x: AsyncFunction): AsyncFunction {
+  return async (...args: unknown[]) => !(await x(...args));
 }
 
 
@@ -133,13 +147,13 @@ export function negate(x: Function): Function {
  * @param fr async resolver ((...args) => unique key) [IDENTITY]
  * @param cache result cache [Map()]
  */
-export function memoize(x: Function, fr: Resolver=null, cache: Map<any, any>=null): Function {
-  var fr    = fr || IDENTITY;
-  var cache = cache || new Map();
-  return async (...args: any[]) => {
-    var k = await fr(...args);
+export function memoize(x: AsyncFunction, fr: Resolver | null=null, cache: Map<unknown, unknown> | null=null): AsyncFunction {
+  fr    = fr || IDENTITY;
+  cache = cache || new Map();
+  return async (...args: unknown[]) => {
+    const k = await fr(...args);
     if (cache.has(k)) return cache.get(k);
-    var v = await x(...args);
+    const v = await x(...args);
     cache.set(k, v);
     return v;
   };
@@ -158,7 +172,7 @@ export function memoize(x: Function, fr: Resolver=null, cache: Map<any, any>=nul
  * @param xs async functions (f, g)
  * @returns (f o g), or f(g(x))
  */
-export function compose(...xs: Function[]): Function {
+export function compose(...xs: AsyncFunction[]): AsyncFunction {
   return composeRight(...xs.reverse());
 }
 // - https://en.wikipedia.org/wiki/Function_composition
@@ -171,11 +185,12 @@ export function compose(...xs: Function[]): Function {
  * @param xs async functions (f, g)
  * @returns (f ▷ g), or g(f(x))
  */
-export function composeRight(...xs: Function[]): Function {
-  return async (...args: any[]) => {
+export function composeRight(...xs: AsyncFunction[]): AsyncFunction {
+  return async (...args: unknown[]) => {
     if (xs.length===0) return;
-    var a = await xs[0](...args);
-    for (var i=1, I=xs.length; i<I; i++)
+    let   a = await xs[0](...args);
+    const I = xs.length;
+    for (let i=1; i<I; i++)
       a = await xs[i](a);
     return a;
   };
@@ -190,7 +205,7 @@ export function composeRight(...xs: Function[]): Function {
 // -------------------
 
 // TODO: Is a generator function better for this?
-// function backoffRetryRec(x: Function, args: any[], err: any, n: number, N: number, t: number, T: number, tf: number): void {
+// function backoffRetryRec(x: AsyncFunction, args: unknown[], err: unknown, n: number, N: number, t: number, T: number, tf: number): void {
 //   if (N>=0 && n>=N) throw err;
 //   if (T>=0 && t>=T) throw err;
 //   try { return x(...args, err); }
@@ -206,6 +221,6 @@ export function composeRight(...xs: Function[]): Function {
  * @param tf retry time factor [2]
  */
 // function backoffRetry(x: Function, N: number, t: number, T: number=-1, tf: number=2): Function {
-//   return (...args: any[]) => backoffRetryRec(x, args, null, 0, N, t, T, tf);
+//   return (...args: unknown[]) => backoffRetryRec(x, args, null, 0, N, t, T, tf);
 // }
 // - TODO
