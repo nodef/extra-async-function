@@ -2,7 +2,7 @@ An [async function] is a function that delivers its [result asynchronously] (thr
 
 ▌
 📦 [JSR](https://jsr.io/@nodef/extra-async-function),
-📦 [NPM](https://www.npmjs.com/package/extra-async-function),
+📦 [NPM](https://www.npmjs.com/package/@nodef/extra-async-function),
 📰 [Docs](https://jsr.io/@nodef/extra-async-function/doc).
 
 This package is an *variant* of [extra-function], and includes methods for
